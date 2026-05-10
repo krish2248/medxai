@@ -51,6 +51,29 @@ scaffold the entire repo per Phase 0, and push it live to GitHub.
 
 **Pushed to:** `https://github.com/krish2248/medxai` (created in this session).
 
+**Post-push fixes (CI feedback loop):**
+
+- First push to `main` failed the Docker build job: `hatchling` validates
+  `pyproject.toml`'s `license = { file = "LICENSE" }` at `uv sync` time and
+  the Dockerfiles only copied `pyproject.toml` + `uv.lock` + `README.md`.
+- Fixed on a feature branch `chore/phase-0-wrap`:
+  - `COPY ... LICENSE ./` added to both Dockerfiles.
+  - Switched the builder stage from `python:3.11-slim` + `COPY --from=ghcr.io/astral-sh/uv:0.5.11`
+    to `FROM ghcr.io/astral-sh/uv:python3.11-bookworm-slim` (the previous
+    pinned uv tag did not exist in the registry).
+- PR #1 opened, CI green (lint+test 17 s, docker build 2 m 1 s),
+  fast-forward merged into `main`, branch deleted.
+- Tagged **v0.0.1-phase0** and published as a GitHub release.
+
+**Final state at end of session:**
+
+- 17 commits on `main` (including the merge commit).
+- Tag `v0.0.1-phase0` pushed.
+- 1 PR opened and merged.
+- CI is green on `main` and on the tagged release.
+- Repo URL: <https://github.com/krish2248/medxai>
+- Release URL: <https://github.com/krish2248/medxai/releases/tag/v0.0.1-phase0>
+
 **Open questions resolved by me (per user delegation):**
 
 - Repo namespace = `krish2248/medxai`.

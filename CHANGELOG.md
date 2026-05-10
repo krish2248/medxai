@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+(no work in progress)
+
+## [0.0.1-phase0] — 2026-05-10
+
 ### Phase 0 — Scaffolding
 
 - Repo initialised under MIT license with `.gitignore`, `.gitattributes`, `CITATION.cff`.
@@ -26,4 +30,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Phase-0 Dockerfiles (`docker/api.Dockerfile`, `docker/streamlit.Dockerfile`) + `docker-compose.yml` (api, streamlit, optional jupyter profile).
 - `CONTRIBUTING.md`, `SECURITY.md`, `.env.example`, `SESSION_LOG.md` for ongoing work tracking.
 
-[Unreleased]: https://github.com/krish2248/medxai/compare/HEAD...HEAD
+### Fixed
+
+- Docker build: `LICENSE` now copied into the builder stage so hatchling can validate `pyproject.toml`'s `license = { file = "LICENSE" }`. Builder switched to `ghcr.io/astral-sh/uv:python3.11-bookworm-slim` for a known-good uv binary.
+
+[Unreleased]: https://github.com/krish2248/medxai/compare/v0.0.1-phase0...HEAD
+[0.0.1-phase0]: https://github.com/krish2248/medxai/releases/tag/v0.0.1-phase0
