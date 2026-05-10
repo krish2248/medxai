@@ -1,0 +1,45 @@
+# MedXAI docker-compose — local dev convenience.
+# Mirrors the HF Spaces deploy surface (Phase 8): one container per service,
+# all on the same network so Streamlit can reach the API by name.
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: docker/api.Dockerfile
+    image: medxai-api:dev
+    container_name: medxai-api
+    ports:
+      - "8000:8000"
+    environment:
+      - MEDXAI_ENV=dev
+    healthcheck:
+      test: ["CMD", "python", "-c", "import medxai; print(medxai.__version__)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  streamlit:
+    build:
+      context: .
+      dockerfile: docker/streamlit.Dockerfile
+    image: medxai-streamlit:dev
+    container_name: medxai-streamlit
+    ports:
+      - "8501:8501"
+    environment:
+      - MEDXAI_API_URL=http://api:8000
+    depends_on:
+      - api
+
+  jupyter:
+    image: jupyter/scipy-notebook:python-3.11
+    container_name: medxai-jupyter
+    ports:
+      - "8888:8888"
+    volumes:
+      - .:/home/jovyan/work
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+    profiles:
+      - jupyter   # opt-in: `docker compose --profile jupyter up jupyter`
