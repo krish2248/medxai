@@ -23,7 +23,7 @@ Coverage `fail_under` ratchets up phase by phase:
 
 | Phase | `fail_under` | Reason |
 |---|---|---|
-| 0 | 50 | Only the version stamp + theme/wellness linters; small denominators. |
+| 0 | 0  | Only `__init__.py` + linters in `scripts/`; nothing meaningful in `src/medxai/` to measure yet. |
 | 1 | 60 | Datamodules + synthetic generators add real branches. |
 | 2 | 75 | First real model + eval + XAI module. |
 | 3+ | 80 | Hits the spec target and stays there. |

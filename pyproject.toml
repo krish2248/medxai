@@ -167,7 +167,6 @@ filterwarnings = [
 [tool.coverage.run]
 branch = true
 source = ["src/medxai"]
-omit = ["src/medxai/__init__.py"]
 
 [tool.coverage.report]
 show_missing = true
@@ -178,7 +177,8 @@ exclude_lines = [
     "if TYPE_CHECKING:",
     "if __name__ == .__main__.:",
 ]
-# Phase 0 has very little code; we ratchet to 80% (per spec Section 14)
-# once Phase 2 lands real modules. Setting it to 0 now would silently let
-# regressions through, so we set it to 50 as a soft floor for scaffolding.
-fail_under = 50
+# Phase 0: src/medxai/ holds only __init__.py + py.typed, so coverage
+# is structurally near-zero. The floor ratchets up phase by phase
+# (see docs/decisions/0005-coverage-floor-ratchets-with-phases.md) and
+# hits the spec's 80% target by Phase 3.
+fail_under = 0
