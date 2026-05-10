@@ -1,0 +1,118 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch: {}
+
+# Cancel superseded runs on the same ref to keep the queue tidy.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  lint-and-test:
+    name: Lint, type-check, test (Python ${{ matrix.python }} on ${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        python: ["3.11"]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
+
+      - name: Set up Python ${{ matrix.python }}
+        run: uv python install ${{ matrix.python }}
+
+      - name: Sync dependencies
+        run: uv sync --all-extras
+
+      - name: Ruff lint
+        run: uv run ruff check .
+
+      - name: Ruff format check
+        run: uv run ruff format --check .
+
+      - name: Mypy (strict on src/medxai)
+        run: uv run mypy src/medxai
+
+      - name: Pytest with coverage
+        run: uv run pytest -q
+
+      - name: Theme linter (frontend + streamlit_app)
+        run: uv run python -m scripts.lint_theme
+
+      - name: Wellness atlas linter
+        run: uv run python -m scripts.lint_wellness
+
+      - name: Upload coverage XML
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-${{ matrix.os }}-${{ matrix.python }}
+          path: coverage.xml
+          if-no-files-found: warn
+          retention-days: 7
+
+  docker:
+    name: Build Docker images (no push)
+    runs-on: ubuntu-latest
+    needs: lint-and-test
+    timeout-minutes: 15
+    # Phase 0 ships only Dockerfiles + compose; the build step lands with
+    # them in the docker/ commit. Until then this job is intentionally a
+    # no-op so the workflow file is stable.
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Skip until Phase 0 docker artefacts land
+        if: hashFiles('docker/api.Dockerfile') == ''
+        run: |
+          echo "No Dockerfiles present yet — skipping image build."
+          echo "This step activates once docker/api.Dockerfile and"
+          echo "docker/streamlit.Dockerfile are added in Phase 0."
+
+      - name: Set up Docker Buildx
+        if: hashFiles('docker/api.Dockerfile') != ''
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build api image
+        if: hashFiles('docker/api.Dockerfile') != ''
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/api.Dockerfile
+          push: false
+          tags: medxai-api:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build streamlit image
+        if: hashFiles('docker/streamlit.Dockerfile') != ''
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/streamlit.Dockerfile
+          push: false
+          tags: medxai-streamlit:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
