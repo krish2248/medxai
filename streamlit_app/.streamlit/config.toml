@@ -1,0 +1,23 @@
+# MedXAI Streamlit theme — see MEDXAI_PROMPT.md Section 11.1 / 11.2.
+# This file is the single source of truth for the Streamlit white theme.
+# The theme linter (scripts/lint_theme.py) treats deviations as build failures.
+
+[theme]
+base = "light"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#FAFAFA"
+textColor = "#111827"
+primaryColor = "#2563EB"
+font = "sans serif"
+
+[server]
+headless = true
+fileWatcherType = "auto"
+runOnSave = false
+
+[browser]
+gatherUsageStats = false
+
+[client]
+toolbarMode = "minimal"
+showErrorDetails = true

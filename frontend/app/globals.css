@@ -1,0 +1,50 @@
+/* MedXAI global stylesheet — locked white theme.
+   Source of truth: MEDXAI_PROMPT.md Section 11.1.
+   The theme linter (scripts/lint_theme.py) flags any forbidden tokens here. */
+
+:root {
+  /* Surfaces */
+  --color-background: #FFFFFF;
+  --color-surface: #FAFAFA;
+  --color-border: #E5E7EB;
+
+  /* Text */
+  --color-text-primary: #111827;
+  --color-text-secondary: #4B5563;
+  --color-text-muted: #9CA3AF;
+
+  /* Single accent + semantic colors */
+  --color-accent: #2563EB;
+  --color-success: #059669;
+  --color-warning: #D97706;
+  --color-danger: #DC2626;
+
+  /* Soft shadow used everywhere; no harsh borders alone. */
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.04);
+
+  /* Typography */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-serif: "Source Serif 4", ui-serif, Georgia, serif;
+}
+
+html,
+body {
+  background: var(--color-background);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Reduced-motion is mandatory (Section 11.7). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
