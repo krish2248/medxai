@@ -81,7 +81,7 @@ Streamlit is the demo surface. Next.js is the polished landing. Both call the **
 
 | Phase | Status |
 |---|---|
-| 0 — Scaffolding | in progress |
+| 0 — Scaffolding | ✅ complete (2026-05-10) |
 | 1 — Data layer | not started |
 | 2 — Tabular MVP (WDBC end-to-end) | not started |
 | 3 — Vision MVP (Kermany pneumonia) | not started |
