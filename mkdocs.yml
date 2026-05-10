@@ -1,0 +1,81 @@
+site_name: MedXAI
+site_description: "Multi-Modal Medical Explainable AI + Wellness Atlas — research/educational use only."
+site_author: Krish Soni
+site_url: https://krish2248.github.io/medxai/
+repo_url: https://github.com/krish2248/medxai
+repo_name: krish2248/medxai
+edit_uri: edit/main/docs/
+
+# Locked white theme — no dark-mode palette toggle.
+theme:
+  name: material
+  language: en
+  font:
+    text: Inter
+    code: JetBrains Mono
+  palette:
+    scheme: default
+    primary: white
+    accent: indigo
+  features:
+    - navigation.instant
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.tabs.link
+    - toc.follow
+  icon:
+    repo: fontawesome/brands/github
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/krish2248/medxai
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            docstring_style: google
+            show_root_heading: true
+            show_source: false
+            members_order: source
+
+# Phase 0 navigation only includes pages that exist. Each later phase adds
+# its own section (datasheets, model cards, evaluation, etc.).
+nav:
+  - Home: index.md
+  - Getting started: getting_started.md
+  - Architecture: architecture.md
+  - Plan: PLAN.md
+  - Decisions:
+      - Index: decisions/README.md
+      - "0001 Cross-platform Make": decisions/0001-cross-platform-make.md
+      - "0002 Defer Next.js scaffold": decisions/0002-defer-frontend-scaffold-to-phase-7.md
+      - "0003 Skip W&B and Dagshub": decisions/0003-defer-wandb-dagshub.md
+      - "0004 Defer DVC remote and HF Hub": decisions/0004-defer-dvc-remote-and-hf-hub.md
+      - "0005 Coverage floor ratchets": decisions/0005-coverage-floor-ratchets-with-phases.md
+
+strict: true
