@@ -1,0 +1,121 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+*.egg
+.eggs/
+build/
+dist/
+wheels/
+pip-wheel-metadata/
+.installed.cfg
+MANIFEST
+
+# --- Virtual envs ---
+.venv/
+venv/
+env/
+ENV/
+.python-version.local
+
+# --- Tooling caches ---
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+*.cover
+.hypothesis/
+.cache/
+
+# --- Jupyter / notebooks ---
+.ipynb_checkpoints/
+*.ipynb_meta
+profile_default/
+ipython_config.py
+
+# --- ML artifacts (use DVC / HF Hub instead) ---
+mlruns/
+mlartifacts/
+wandb/
+lightning_logs/
+outputs/
+checkpoints/
+*.ckpt
+*.pt
+*.pth
+*.onnx
+*.tflite
+*.h5
+*.safetensors
+
+# --- Data (DVC tracked) ---
+data/raw/
+data/interim/
+data/processed/
+data/synthetic/
+!data/.gitkeep
+!data/**/.gitkeep
+
+# --- DVC ---
+/.dvc/cache
+/.dvc/tmp
+/.dvc/plots
+
+# --- Docs build ---
+site/
+.docs-build/
+
+# --- Node / Next.js ---
+node_modules/
+.next/
+out/
+dist-frontend/
+*.tsbuildinfo
+.pnpm-store/
+.yarn/
+yarn-error.log
+npm-debug.log*
+pnpm-debug.log*
+
+# --- Reports ---
+reports/paper/build/
+reports/paper/*.aux
+reports/paper/*.log
+reports/paper/*.bbl
+reports/paper/*.blg
+reports/paper/*.out
+reports/paper/*.toc
+
+# --- IDEs / editors ---
+.idea/
+.vscode/
+!.vscode/extensions.json
+*.swp
+*.swo
+*~
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Secrets / env ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+.kaggle/
+kaggle.json
+
+# --- Claude Code local cache ---
+.claude/

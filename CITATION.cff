@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+title: "MedXAI: Multi-Modal Medical Explainable AI + Wellness Atlas"
+message: "If you use MedXAI in academic work, please cite it as below."
+type: software
+authors:
+  - family-names: Soni
+    given-names: Krish
+    email: sonikrish2248@gmail.com
+repository-code: "https://github.com/krish2248/medxai"
+license: MIT
+version: 0.0.1
+date-released: "2026-05-10"
+abstract: >
+  MedXAI is a multi-modal medical AI portfolio system that pairs a curated set
+  of imaging, tabular, and lab-report models with quantitative explainability
+  (Grad-CAM, Integrated Gradients, SHAP, LIME, DiCE) and a human-curated,
+  citation-backed Wellness Atlas of preventive-health knowledge. It is a
+  research and educational artifact, not a medical device.
+keywords:
+  - medical-imaging
+  - explainable-ai
+  - xai
+  - radiology
+  - tabular-ml
+  - reproducibility

@@ -1,0 +1,41 @@
+# Auto-detect text files and normalize line endings to LF in the repo.
+* text=auto eol=lf
+
+# Explicitly mark binary files so git does not try to diff them.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.tar binary
+*.gz binary
+*.bz2 binary
+*.7z binary
+*.parquet binary
+*.feather binary
+*.pkl binary
+*.npz binary
+*.pt binary
+*.pth binary
+*.onnx binary
+*.safetensors binary
+*.ckpt binary
+*.h5 binary
+*.tflite binary
+*.woff binary
+*.woff2 binary
+*.eot binary
+*.ttf binary
+*.otf binary
+
+# Treat lockfiles as generated for diff purposes.
+uv.lock linguist-generated=true
+package-lock.json linguist-generated=true
+pnpm-lock.yaml linguist-generated=true
+yarn.lock linguist-generated=true
+
+# Linguist: tell GitHub language stats to ignore vendored / generated dirs.
+docs/** linguist-documentation
+notebooks/** linguist-vendored
