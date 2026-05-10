@@ -1,23 +1,17 @@
 # MedXAI Streamlit image — Phase 0 placeholder.
 # Same structure as the API image so behaviour is symmetric.
 
-FROM python:3.11-slim AS builder
+FROM ghcr.io/astral-sh/uv:python3.11-bookworm-slim AS builder
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    PIP_DISABLE_PIP_VERSION_CHECK=1 \
-    PIP_NO_CACHE_DIR=1 \
-    UV_LINK_MODE=copy
+    UV_LINK_MODE=copy \
+    UV_COMPILE_BYTECODE=1
 
 WORKDIR /app
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends curl ca-certificates \
-    && rm -rf /var/lib/apt/lists/*
-
-COPY --from=ghcr.io/astral-sh/uv:0.5.11 /uv /uvx /usr/local/bin/
-
-COPY pyproject.toml uv.lock README.md ./
+# LICENSE is required by hatchling at sync time (see pyproject.toml).
+COPY pyproject.toml uv.lock README.md LICENSE ./
 COPY src ./src
 COPY streamlit_app ./streamlit_app
 

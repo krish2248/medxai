@@ -3,24 +3,18 @@
 # the production image will be so the docker-compose surface and the CI
 # build step are stable from day one.
 
-FROM python:3.11-slim AS builder
+FROM ghcr.io/astral-sh/uv:python3.11-bookworm-slim AS builder
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    PIP_DISABLE_PIP_VERSION_CHECK=1 \
-    PIP_NO_CACHE_DIR=1 \
-    UV_LINK_MODE=copy
+    UV_LINK_MODE=copy \
+    UV_COMPILE_BYTECODE=1
 
 WORKDIR /app
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends curl ca-certificates \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install uv from the official binary release.
-COPY --from=ghcr.io/astral-sh/uv:0.5.11 /uv /uvx /usr/local/bin/
-
-COPY pyproject.toml uv.lock README.md ./
+# License file is referenced by pyproject.toml's `license = { file = "LICENSE" }`
+# and must be present at sync time for hatchling to validate metadata.
+COPY pyproject.toml uv.lock README.md LICENSE ./
 COPY src ./src
 
 RUN uv sync --frozen --no-dev --all-extras
